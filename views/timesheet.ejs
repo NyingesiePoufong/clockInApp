@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+    <title>Clock In</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+
+    <div class="page-header text-center">
+        <h1><span class="fa fa-hamburger"></span> Timesheet</h1>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+
+    <div class="row">
+
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-6">
+            <div class="well">
+                <h3><span class="fa fa-user"></span> Employee</h3>
+
+                <% if (user.local.email) { %>
+                    <p>
+                        <strong></strong><br>
+                        <strong>email</strong>: <%= user.local.email %><br>
+                        <strong></strong>
+                    </p>
+
+                    <a href="/unlink/local" class="btn btn-default">Unlink</a>
+                <% } else { %>
+                    <a href="/connect/local" class="btn btn-default">Connect Local</a>
+                <% } %>
+
+            </div>
+        </div>
+
+        <div>
+          <h2>Punch-In</h2>
+          <span id="demo"></span>
+
+
+          <form action="/punched-in" method="post">
+            <input id="timelog" class="timelog" name="timelog" type="number" readonly></span>
+            <input id="latitude" name="latitude" type="number" readonly  value="" />
+            <input id="longitude" name="longitude" type="number" readonly  value="" />
+            <button id="in">Time-In</button>
+          </form>
+
+
+          <h2>Punch-Out</h2>
+          <form action="/punched-out" method="post">
+            <input id="timelog2" class="timelog" name="timelog" type="number" readonly></span>
+            <input id="latitude2" name="latitude" type="number" readonly  value="" />
+            <input id="longitude2" name="longitude" type="number" readonly  value="" />
+            <button id="out">Time-Out</button>
+          </form>
+        </div>
+        <br>
+
+        <form method="post" action="/add-timelog">
+          <input id="time-in" name="timeIn" type="hidden" />
+          <input id="time-out" name="timeOut" type="hidden" />
+          <input id="employee" name="employee" type="hidden" />
+          <button disabled id="final-submit">Submit</button>
+        </form>
+
+        <!-- send the form to the manager  -->
+
+<script>
+const submitButton = document.getElementById('final-submit');
+const punchIn = JSON.parse('<%- JSON.stringify(punchIn) %>' || false);
+console.log(JSON.parse('<%- JSON.stringify(punchIn) %>'))
+const punchOut = JSON.parse('<%- JSON.stringify(punchOut) %>' || false);
+console.log(JSON.parse('<%= JSON.stringify(punchOut) %>'))
+const timeLogSubmitted = '<%= timeLogSubmitted %>'
+if (punchIn) {
+  document.getElementById('in').disabled = true;
+  document.getElementById('time-in').value = punchIn.timestamp;
+  document.getElementById('employee').value = punchIn.email;
+}
+if (punchOut) {
+  document.getElementById('out').disabled = true
+  document.getElementById('time-out').value = punchOut.timestamp
+}
+if (punchIn && punchOut) {
+  submitButton.disabled = false;
+}
+if (timeLogSubmitted > 0) {
+  submitButton.disabled = true;
+}
+
+/*
+submitButton.addEventListener('click', e => {
+  fetch('/add-timelog', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      timeIn: punchIn.timestamp,
+      timeOut: punchOut.timestamp,
+      employee: punchIn.email
+    })
+  });
+});
+*/
+</script>
+<script src="userTimesheet.js"></script>
+</body>
+</html>

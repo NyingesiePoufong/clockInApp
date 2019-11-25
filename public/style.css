@@ -1,0 +1,38 @@
+body{
+  padding-top:80px;
+  word-wrap:break-word;
+}
+img{
+  height: 200px;
+}
+
+body{
+  background-color: cornflowerblue;
+}
+
+.well{
+  background-color: lightsteelblue;
+}
+
+#timelog{
+  background-color: lightsteelblue;
+}
+
+#latitude{
+  background-color: lightsteelblue;
+}
+
+#longitude{
+  background-color: lightsteelblue;
+}
+#timelog2{
+  background-color: lightsteelblue;
+}
+
+#latitude2{
+  background-color: lightsteelblue;
+}
+
+#longitude2{
+  background-color: lightsteelblue;
+}
